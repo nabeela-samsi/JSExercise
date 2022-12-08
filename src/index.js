@@ -98,12 +98,10 @@ to array, and so on.
 
 const generateNewFolderName = (existingFolders) => {
   /*  provide your code here */
-  console.log(folder.length);
-  if (folder.length === 0) {
-    folder = [...folder, "New Folder"];
-  } else {
-    folder = [...folder, "New Folder (" + count + ")"];
-  }
+  folder =
+    folder.length === 0
+      ? [...folder, "New Folder"]
+      : [...folder, "New Folder (" + count + ")"];
   count++;
 };
 

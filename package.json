@@ -1,0 +1,23 @@
+{
+  "name": "fs13-javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "sass --watch src/styles/styles.scss:src/compiled/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nabeela-samsi/fs13-JavaScript.git"
+  },
+  "author": "Nabeela Samsi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nabeela-samsi/fs13-JavaScript/issues"
+  },
+  "homepage": "https://github.com/nabeela-samsi/fs13-JavaScript#readme",
+  "dependencies": {
+    "sass": "^1.56.1"
+  }
+}

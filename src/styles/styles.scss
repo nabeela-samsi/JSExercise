@@ -1,0 +1,8 @@
+@use "abstracts/colors";
+
+@use "layout/main.scss";
+@use "layout/error.scss";
+
+html{
+    background-color: colors.$bg-color;
+}

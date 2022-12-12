@@ -1,0 +1,20 @@
+@use "../abstracts/colors";
+
+.error{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: colors.$err-text-color;
+    flex-direction: column;
+    padding-top: 10%;
+
+    &__title {
+        font-size: 2em;
+    }
+
+}
+
+.fa-warning, .fa-frown-o{
+    font-size: 6em;
+    color: colors.$err-icon-color;
+}

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="compiled/styles.css">
     <title>Document</title>
 </head>
@@ -14,5 +15,16 @@
         * no extra library, only vanilla CSS or SASS. Be creative in your own layout
      -->
     <script src="index.js"></script>
+
+    <form class="search--form">
+        <input id="name" class="search--form__name" type="text" placeholder="country name"/>
+        <button type="button" class="search--form__search--button" onclick="getSingleCountry();">
+            <i class="fa fa-search"></i>
+        </button>
+    </form>
+    <section>
+        <br />
+        <article id="results"></article>
+    </section>
 </body>
 </html>

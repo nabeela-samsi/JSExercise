@@ -81,10 +81,99 @@ The data fetched from url should be displayed in index.html.
 
 const getAllCountries = () => {
   /* provide your code here */
+  displayData("https://restcountries.com/v3.1/all");
 };
 
 const getSingleCountry = () => {
   /* provide your code here */
+  const name = document.getElementById("name").value;
+
+  if (!name.trim().length) {
+    return false;
+  }
+
+  displayData(`https://restcountries.com/v3.1/name/${name}`);
+};
+
+const displayData = (url) => {
+  let responseData = {};
+  fetch(url)
+    .then(async (response) => {
+      if (response.status !== 200) {
+        throw new Error(response.status);
+      }
+
+      responseData = await response.json();
+
+      if (responseData.length > 0) {
+        let sortedData = responseData.sort((a, b) => {
+          return a.name.common < b.name.common ? -1 : 1;
+        });
+
+        let countryData = sortedData
+          .map((data) => {
+            return `
+                <div class="container__item">
+                  <h2>
+                    ${data.name.common}
+                  </h2x >
+                  <h3>
+                    Official name: ${data.name.official}
+                  </h3>
+                  <p>
+                    Capital: ${data.capital}
+                  </p>
+                  <p>
+                    Region: ${data.region}
+                  </p>
+                  <p>
+                    Subregion: ${data.subregion}
+                  </p>
+                  <p>
+                    Independent: ${data.independent}
+                  </p>
+                  <p>
+                    Populations: ${data.population}
+                  </p>
+                  <img alt="country-flag" src=${data.flags.png} height="180em" width="280em">
+                </div>`;
+          })
+          .join("<br>");
+
+        document.getElementById(
+          "results"
+        ).innerHTML = `<div class="container">${countryData}</div>`;
+      }
+    })
+    .catch((error) => {
+      let errorWindow;
+
+      if (error.message == 4) {
+        errorWindow = `
+            <i class="fa fa-frown-o"></i>
+            <p class="error__title">
+              404: Not Found
+            </p>
+            <p class="error__message">
+              Please try agian by providing valid country name
+            </p>
+        `;
+      } else {
+        errorWindow = `
+          <i class="fa fa-warning"></i>
+          <p class="error__title">
+            Something Went Wrong
+          </p>
+          <p class="error__message">
+            Please try again later
+          </p>
+        `;
+      }
+
+      document.getElementById(
+        "results"
+      ).innerHTML = `<div class="error">${errorWindow}</div>`;
+    });
 };
 
 getAllCountries();
@@ -137,3 +226,19 @@ class TaxableBook {
 
 const book1 = new Book("The Power of Habits", 14, 0.3);
 const book2 = new TaxableBook("The Power of Habits", 14, 0.3, 24);
+
+class NameGenerator {
+  _name;
+
+  constructor(name) {
+    this._name = name;
+  }
+
+  get name() {
+    return this._name;
+  }
+}
+
+let nameGenerator = new NameGenerator("John");
+nameGenerator.name = "Jane"; // Cannot assign to 'name' because it is a read-only property.
+console.log(`My name is ${nameGenerator.name}`); // My name is John

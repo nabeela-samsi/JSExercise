@@ -1,0 +1,28 @@
+@use "../abstracts/colors";
+
+.search--form{
+    padding-left: 35%;
+    padding-top: 2%;
+
+    &__name{
+        width: 20em;
+        height: 2em;
+    }
+
+    &__form__search--button{
+        height: 2.5em;
+    }
+}
+
+.container{
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: repeat(auto-fit, minmax(18.8em,auto));
+    justify-content: space-evenly;
+
+    &__item{
+        background-color: colors.$item-bg-color;
+        border: 0.19em solid colors.$item-border-color;
+        text-align: center;
+    }
+}

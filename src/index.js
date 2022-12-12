@@ -64,10 +64,10 @@ Expected result in the console: 11 days - 13 hours - 38 minutes - 20 seconds
 const dateFrom = new Date(500000);
 const dateTo = new Date(1000000000);
 const counter = (from, to) => {
-  let daysDiff = Math.floor(Math.abs(from - to) / (1000 * 60 * 60 * 24));
-  let hoursDiff = Math.abs(from.getHours() - to.getHours());
-  let minutesDiff = Math.abs(from.getMinutes() - to.getMinutes());
-  let secondsDiff = Math.abs(from.getSeconds() - to.getSeconds());
+  const daysDiff = Math.floor(Math.abs(from - to) / (1000 * 60 * 60 * 24));
+  const hoursDiff = Math.abs(from.getHours() - to.getHours());
+  const minutesDiff = Math.abs(from.getMinutes() - to.getMinutes());
+  const secondsDiff = Math.abs(from.getSeconds() - to.getSeconds());
   return `${daysDiff} days - ${hoursDiff} hours - ${minutesDiff} minutes - ${secondsDiff} seconds`;
 };
 const timer = counter(dateFrom, dateTo);
@@ -106,11 +106,11 @@ const displayData = (url) => {
       responseData = await response.json();
 
       if (responseData.length > 0) {
-        let sortedData = responseData.sort((a, b) => {
+        const sortedData = responseData.sort((a, b) => {
           return a.name.common < b.name.common ? -1 : 1;
         });
 
-        let countryData = sortedData
+        const countryData = sortedData
           .map((data) => {
             return `
                 <div class="container__item">
@@ -217,12 +217,97 @@ cost 14, profit 0.3 , tax 24% => expected price is 30.43
 */
 class Book {
   _title;
-  constructor(title, cost, profit) {}
+
+  #title;
+  #cost;
+  #profit;
+  #price;
+
+  constructor(title, cost, profit) {
+    if (typeof title !== "string" || title.trim().length == 0) {
+      throw new Error(
+        "title should be string and blank values are not accepted"
+      );
+    }
+
+    if (typeof cost !== "number" || cost < 0) {
+      throw new Error("cost should be number and cannot be negative ");
+    }
+    //positive number > 0 and =< 0.5
+    if (typeof profit !== "number" || profit < 0 || profit > 0.5) {
+      throw new Error("profit should be number and should be between 0 to 0.5");
+    }
+    this.#title = title;
+    this.#cost = cost;
+    this.#profit = profit;
+    this.#price = this.#cost / (1 - this.#profit.toFixed(2));
+  }
+
+  get getCost() {
+    return this.#cost;
+  }
+
+  get getTitle() {
+    return this.#title;
+  }
+
+  get getProfit() {
+    return this.#profit;
+  }
+
+  get getPrice() {
+    return this.#price;
+  }
+
+  set incrementPrice(amount) {
+    this.#price += amount;
+  }
+
+  set decrementPrice(amount) {
+    this.#price -= amount;
+  }
 }
 
-class TaxableBook {
+class TaxableBook extends Book {
   /* provide your code here */
+
+  #taxRate;
+  #price;
+
+  constructor(title, cost, profit, taxRate) {
+    super(title, cost, profit);
+    if (typeof taxRate !== "number") {
+      throw new Error("taxRate should be number");
+    }
+
+    this.#taxRate = taxRate;
+    this.#price = (cost / (1 - profit - this.#taxRate / 100)).toFixed(2);
+  }
+
+  get getTaxRate() {
+    return this.#taxRate;
+  }
+
+  get getPriceWithTax() {
+    return this.#price;
+  }
 }
 
 const book1 = new Book("The Power of Habits", 14, 0.3);
+
+console.log(`The cost of ${book1.getTitle} is ${book1.getCost}`);
+console.log(
+  `The profit made on selling ${book1.getTitle} is ${book1.getProfit}`
+);
+console.log(`The price of ${book1.getTitle} is ${book1.getPrice}`);
+
+book1.incrementPrice = 10;
+console.log(`The increased price of ${book1.getTitle} is ${book1.getPrice}`);
+
+book1.decrementPrice = 4;
+console.log(`The decreased price of ${book1.getTitle} is ${book1.getPrice}`);
+
 const book2 = new TaxableBook("The Power of Habits", 14, 0.3, 24);
+console.log(
+  `The price calulated with tax rate of ${book2.getTaxRate} to ${book1.getTitle} book is ${book2.getPriceWithTax}`
+);

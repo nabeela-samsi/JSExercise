@@ -19,4 +19,4 @@ Worked on 6 different challenges of Javascript as follows:
 
 ## Demo
 
-Here is the demo to checkout [my-work](). The webpage will display the lists of country where as in console my other work output is present.
+Here is the demo to checkout [my-work](https://nabeela-samsi.github.io/JSExercise/src/index.html). The webpage will display the lists of country where as in console my other work output is present.

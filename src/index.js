@@ -226,19 +226,3 @@ class TaxableBook {
 
 const book1 = new Book("The Power of Habits", 14, 0.3);
 const book2 = new TaxableBook("The Power of Habits", 14, 0.3, 24);
-
-class NameGenerator {
-  _name;
-
-  constructor(name) {
-    this._name = name;
-  }
-
-  get name() {
-    return this._name;
-  }
-}
-
-let nameGenerator = new NameGenerator("John");
-nameGenerator.name = "Jane"; // Cannot assign to 'name' because it is a read-only property.
-console.log(`My name is ${nameGenerator.name}`); // My name is John

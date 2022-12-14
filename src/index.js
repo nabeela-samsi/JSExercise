@@ -34,23 +34,20 @@ let myArr = [
 const fixDate = (array) => {
   /* provide your code here */
   return array.map((str) => {
-    let key1;
-    let key2;
+    let day;
+    let month;
+    let year;
     let splitedValue = str.split("-");
-    if (
-      splitedValue[1].length === 4 ||
-      (splitedValue[1] > 12 && splitedValue[0].length === 4)
-    ) {
-      key1 = splitedValue[0] < 12 ? 0 : 2;
-      key2 = 1;
-      [splitedValue[key1], splitedValue[key2]] = [
-        splitedValue[key2],
-        splitedValue[key1],
-      ];
-      str = `${splitedValue[0]}-${splitedValue[1]}-${splitedValue[2]}`;
-    }
-    let date = new Date(str);
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    splitedValue.map((value) => {
+      if (value.length === 4) {
+        year = value;
+      } else if (value <= 12 && value != 8) {
+        month = value;
+      } else {
+        day = value;
+      }
+    });
+    return `${day}-${month}-${year}`;
   });
 };
 let newArr = fixDate(myArr);

@@ -145,7 +145,7 @@ const displayData = (url) => {
     .catch((error) => {
       let errorWindow;
 
-      if (error.message == 4) {
+      if (error.message == 404) {
         errorWindow = `
             <i class="fa fa-frown-o"></i>
             <p class="error__title">
@@ -185,14 +185,12 @@ to array, and so on.
 const generateNewFolderName = (existingFolders) => {
   /*  provide your code here */
   folder =
-    folder.length === 0
-      ? [...folder, "New Folder"]
-      : [...folder, "New Folder (" + count + ")"];
-  count++;
+    existingFolders.length === 0
+      ? [...existingFolders, "New Folder"]
+      : [...existingFolders, "New Folder (" + existingFolders.length + ")"];
 };
 
 let folder = [];
-let count = 0;
 generateNewFolderName(folder);
 generateNewFolderName(folder);
 generateNewFolderName(folder);
@@ -213,8 +211,6 @@ Complete class TaxableBook:
 cost 14, profit 0.3 , tax 24% => expected price is 30.43
 */
 class Book {
-  _title;
-
   #title;
   #cost;
   #profit;
@@ -261,24 +257,28 @@ class Book {
   }
 
   set decrementPrice(amount) {
-    this.#price -= amount;
+    if (this.#price > 0) {
+      this.#price -= amount;
+    } else {
+      throw new Error("Cannot decrease the price amount further");
+    }
   }
+
+  calcPricewithTaxRate = (taxRate) => {
+    return (this.#cost / (1 - this.#profit - taxRate / 100)).toFixed(2);
+  };
 }
 
 class TaxableBook extends Book {
   /* provide your code here */
-
   #taxRate;
-  #price;
 
   constructor(title, cost, profit, taxRate) {
     super(title, cost, profit);
     if (typeof taxRate !== "number") {
       throw new Error("taxRate should be number");
     }
-
     this.#taxRate = taxRate;
-    this.#price = (cost / (1 - profit - this.#taxRate / 100)).toFixed(2);
   }
 
   get getTaxRate() {
@@ -286,7 +286,7 @@ class TaxableBook extends Book {
   }
 
   get getPriceWithTax() {
-    return this.#price;
+    return this.calcPricewithTaxRate(this.#taxRate);
   }
 }
 
